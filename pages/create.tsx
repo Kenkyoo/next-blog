@@ -5,11 +5,20 @@ import Router from "next/router";
 const Draft: React.FC = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [tagsInput, setTagsInput] = useState(""); // Nuevo estado
 
   const submitData = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     try {
-      const body = { title, content };
+      const body = {
+        title,
+        content,
+        tags: tagsInput
+          .split(",")
+          .map((tag) => tag.trim())
+          .filter((tag) => tag.length > 0),
+      };
+
       await fetch("/api/post", {
         method: "POST",
         credentials: "include",
@@ -41,6 +50,13 @@ const Draft: React.FC = () => {
             rows={8}
             value={content}
           />
+          <input
+            onChange={(e) => setTagsInput(e.target.value)}
+            placeholder="Tags (separated by commas)"
+            type="text"
+            value={tagsInput}
+          />
+
           <input disabled={!content || !title} type="submit" value="Create" />
           <a className="back" href="#" onClick={() => Router.push("/")}>
             or Cancel

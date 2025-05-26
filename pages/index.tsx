@@ -11,6 +11,9 @@ export const getStaticProps: GetStaticProps = async () => {
       author: {
         select: { name: true },
       },
+      tags: {
+        select: { name: true },
+      },
     },
   });
   return {

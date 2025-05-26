@@ -10,6 +10,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 interface PostRequestBody {
   title: string;
   content?: string;
+  tags?: { name: string }[];
 }
 
 interface SessionUser {
@@ -20,7 +21,12 @@ export default async function handle(
   req: NextApiRequest & { body: PostRequestBody },
   res: NextApiResponse
 ) {
-  const { title, content } = req.body;
+  const { title, content, tags } = req.body;
+
+  const tagObjects = tags?.map((tag: string) => ({
+    where: { name: tag },
+    create: { name: tag },
+  }));
 
   const session = await getServerSession(req, res, authOptions);
 
@@ -33,6 +39,9 @@ export default async function handle(
     data: {
       title: title,
       content: content,
+      tags: {
+        connectOrCreate: tagObjects,
+      },
       author: { connect: { email: email } },
     },
   });

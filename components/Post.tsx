@@ -11,6 +11,7 @@ export type PostProps = {
   } | null;
   content: string;
   published: boolean;
+  tags?: { name: string }[]; // <- agregá esto
 };
 
 const Post: React.FC<{ post: PostProps }> = ({ post }) => {
@@ -24,6 +25,34 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
         div {
           color: inherit;
           padding: 2rem;
+        }
+      `}</style>
+      {post.tags && post.tags.length > 0 && (
+        <div className="tags">
+          {post.tags.map((tag, index) => (
+            <span key={index} className="tag">
+              {tag.name}
+            </span>
+          ))}
+        </div>
+      )}
+      <style jsx>{`
+        div {
+          color: inherit;
+          padding: 2rem;
+        }
+
+        .tags {
+          margin-top: 1rem;
+        }
+
+        .tag {
+          background-color: #f2f2f2;
+          border-radius: 0.25rem;
+          padding: 0.2rem 0.5rem;
+          margin-right: 0.5rem;
+          font-size: 0.85rem;
+          display: inline-block;
         }
       `}</style>
     </div>
