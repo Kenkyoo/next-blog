@@ -27,7 +27,6 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   }
   return {
     props: { tag },
-    revalidate: 10,
   };
 };
 
