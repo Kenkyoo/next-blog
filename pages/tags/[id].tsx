@@ -3,26 +3,9 @@ import Layout from "@/components/Layout";
 import Post, { PostProps } from "@/components/Post";
 import prisma from "@/lib/prisma";
 
-export async function getStaticPaths() {
-  const tags = await prisma!.tag.findMany({
-    select: { name: true },
-  });
+import { GetServerSideProps } from "next";
 
-  const paths = tags.map((tag) => ({
-    params: { id: tag.name },
-  }));
-
-  return {
-    paths,
-    fallback: "blocking",
-  };
-}
-
-export const getServerSideProps = async ({
-  params,
-}: {
-  params: { id: string };
-}) => {
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const tag = await prisma!.tag.findUnique({
     where: {
       name: String(params?.id),
@@ -42,7 +25,6 @@ export const getServerSideProps = async ({
       notFound: true,
     };
   }
-
   return {
     props: { tag },
     revalidate: 10,
