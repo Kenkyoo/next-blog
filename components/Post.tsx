@@ -21,12 +21,6 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
       <h2>{post.title}</h2>
       <small>By {authorName}</small>
       <ReactMarkdown>{post.content}</ReactMarkdown>
-      <style jsx>{`
-        div {
-          color: inherit;
-          padding: 2rem;
-        }
-      `}</style>
       {post.tags && post.tags.length > 0 && (
         <div className="tags">
           {post.tags.map((tag, index) => (
