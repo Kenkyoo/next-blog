@@ -1,5 +1,4 @@
 import React from "react";
-import { GetStaticProps } from "next";
 import Layout from "@/components/Layout";
 import Post, { PostProps } from "@/components/Post";
 import prisma from "@/lib/prisma";
@@ -19,7 +18,11 @@ export async function getStaticPaths() {
   };
 }
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getServerSideProps = async ({
+  params,
+}: {
+  params: { id: string };
+}) => {
   const tag = await prisma!.tag.findUnique({
     where: {
       name: String(params?.id),
