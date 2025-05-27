@@ -15,36 +15,21 @@ interface ApiResponse {
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 const Result = () => {
-  // const router = useRouter(); // Inicializar useRouter
   const [page, setPage] = React.useState(1);
-  const [searchTerm, setSearchTerm] = React.useState<string>(""); // Nuevo estado para el valor del input
+  const [searchValue, setSearchValue] = React.useState("");
+  const [query, setQuery] = React.useState("");
 
-  // Determinar la query real que se enviará a la API
-  const apiQuery = searchTerm.trim(); // Elimina espacios en blanco al inicio/final
-
-  // Construir la URL de SWR dinámicamente
-  // useSWR solo se ejecutará si apiQuery está definido (o es una cadena vacía)
-  const { data, error, mutate } = useSWR<ApiResponse>(
-    `/api/search?page=${page}&query=${encodeURIComponent(apiQuery)}`, // Codifica la query
+  const { data, error } = useSWR<ApiResponse>(
+    `/api/search?page=${page}&query=${encodeURIComponent(query)}`,
     fetcher
   );
 
-  // Reinicia la paginación cuando cambia la búsqueda
-  React.useEffect(() => {
-    setPage(1);
-    mutate(); // Forzar una re-validación de SWR para la nueva búsqueda
-  }, [apiQuery, mutate]); // Dependencia en apiQuery para detectar cambios en la búsqueda
+  const debounced = useDebouncedCallback((value: string) => {
+    setPage(1); // Volver a la primera página cuando cambia la búsqueda
+    setQuery(value);
+  }, 1000);
 
-  const debounced = useDebouncedCallback(
-    // function
-    (value) => {
-      setSearchTerm(value);
-    },
-    // delay in ms
-    5000
-  );
-
-  if (error) return <div>Error fetching posts.</div>;
+  if (error) return <div>Error fetching posts</div>;
   if (!data) return <div>Loading...</div>;
 
   const { feed, totalPosts, pageSize } = data;
@@ -65,16 +50,22 @@ const Result = () => {
   return (
     <Layout>
       <div className="page">
-        <h1>Public Feed Search</h1>
+        <h1>Public Feed</h1>
+        <p>Search</p>
         <input
           type="text"
-          value={searchTerm} // Controla el valor del input
-          onChange={(e) => debounced(e.target.value)} // Actualiza searchTerm
-          placeholder="Search by title..."
+          value={searchValue}
+          onChange={(e) => {
+            const val = e.target.value;
+            setSearchValue(val);
+            debounced(val);
+          }}
+          placeholder="Search..."
         />
+
         <main>
           {feed.length === 0 ? (
-            <div>No posts found for &quot;{apiQuery}&quot;.</div>
+            <div>No posts found.</div>
           ) : (
             feed.map((post: PostProps) => (
               <div key={post.id} className="post">
@@ -83,30 +74,19 @@ const Result = () => {
             ))
           )}
         </main>
-        {totalPosts > 0 && ( // Solo muestra los controles si hay posts
-          <div className="pagination-controls">
-            <button onClick={handlePreviousPage} disabled={page === 1}>
-              Previous
-            </button>
-            <span>
-              Page {page} of {totalPages}
-            </span>
-            <button onClick={handleNextPage} disabled={page === totalPages}>
-              Next
-            </button>
-          </div>
-        )}
+        <div className="pagination-controls">
+          <button onClick={handlePreviousPage} disabled={page === 1}>
+            Previous
+          </button>
+          <span>
+            Page {page} of {totalPages}
+          </span>
+          <button onClick={handleNextPage} disabled={page === totalPages}>
+            Next
+          </button>
+        </div>
       </div>
       <style jsx>{`
-        input[type="text"] {
-          width: 100%;
-          padding: 0.8rem;
-          margin-bottom: 2rem;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-          font-size: 1rem;
-        }
-
         .post {
           background: white;
           transition: box-shadow 0.1s ease-in;
@@ -125,7 +105,7 @@ const Result = () => {
           justify-content: center;
           align-items: center;
           margin-top: 2rem;
-          gap: 1rem;
+          gap: 1rem; /* Espacio entre los elementos */
         }
 
         .pagination-controls button {
