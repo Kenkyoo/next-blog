@@ -45,6 +45,12 @@ const Header: React.FC = () => {
         <Link href="/drafts" data-active={isActive("/drafts")}>
           My drafts
         </Link>
+        <Link href="/search" data-active={isActive("/search")}>
+          Search
+        </Link>
+        <Link href="/myPosts" data-active={isActive("/myPosts")}>
+          My Posts
+        </Link>
       </div>
     );
     right = (

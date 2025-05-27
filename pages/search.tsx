@@ -41,7 +41,7 @@ const Result = () => {
       setSearchTerm(value);
     },
     // delay in ms
-    1000
+    5000
   );
 
   if (error) return <div>Error fetching posts.</div>;
