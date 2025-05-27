@@ -3,7 +3,7 @@ import React from "react";
 import Layout from "../components/Layout";
 import Post, { PostProps } from "../components/Post";
 import useSWR from "swr";
-
+import { useDebouncedCallback } from "use-debounce";
 // Define el tipo de la respuesta de la API para mejor tipado
 interface ApiResponse {
   feed: PostProps[];
@@ -35,6 +35,15 @@ const Result = () => {
     mutate(); // Forzar una re-validación de SWR para la nueva búsqueda
   }, [apiQuery, mutate]); // Dependencia en apiQuery para detectar cambios en la búsqueda
 
+  const debounced = useDebouncedCallback(
+    // function
+    (value) => {
+      setSearchTerm(value);
+    },
+    // delay in ms
+    1000
+  );
+
   if (error) return <div>Error fetching posts.</div>;
   if (!data) return <div>Loading...</div>;
 
@@ -60,7 +69,7 @@ const Result = () => {
         <input
           type="text"
           value={searchTerm} // Controla el valor del input
-          onChange={(e) => setSearchTerm(e.target.value)} // Actualiza searchTerm
+          onChange={(e) => debounced(e.target.value)} // Actualiza searchTerm
           placeholder="Search by title..."
         />
         <main>
