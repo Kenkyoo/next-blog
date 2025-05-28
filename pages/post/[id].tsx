@@ -96,9 +96,6 @@ const Post: React.FC<PostProps> = (props) => {
         <div className="actions">
           {userHasValidSession && postBelongsToUser && (
             <>
-              <button onClick={handleFavorite}>
-                {isFavorited ? "★ Favorito" : "☆ Guardar"}
-              </button>
               <button onClick={() => publishPost(props.id)}>Publish</button>
               <button onClick={() => deletePost(props.id)}>Delete</button>
               <button onClick={() => Router.push(`/edit/${props.id}`)}>
@@ -106,6 +103,9 @@ const Post: React.FC<PostProps> = (props) => {
               </button>
             </>
           )}
+          <button onClick={handleFavorite}>
+            {isFavorited ? "★ Favorito" : "☆ Guardar"}
+          </button>
         </div>
       </div>
       <style jsx>{`
