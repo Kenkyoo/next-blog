@@ -51,6 +51,9 @@ const Header: React.FC = () => {
         <Link href="/myPosts" data-active={isActive("/myPosts")}>
           My Posts
         </Link>
+        <Link href="/favorites" data-active={isActive("/favorites")}>
+          Favorites
+        </Link>
       </div>
     );
     right = (
