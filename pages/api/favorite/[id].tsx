@@ -13,7 +13,7 @@ export default async function handle(
     const session = await getServerSession(req, res, authOptions);
     const email = session?.user?.email;
     const userId = session?.user?.id;
-    if (!session || !email) {
+    if (!session || !email || !userId) {
       return res.status(401).json({ error: "Unauthorized" });
     }
     const post = await prisma!.favorite.delete({
@@ -33,7 +33,7 @@ export default async function handle(
     const email = session?.user?.email;
     const userId = session?.user?.id;
 
-    if (!session || !email) {
+    if (!session || !email || !userId) {
       return res.status(401).json({ error: "Unauthorized" });
     }
     try {
