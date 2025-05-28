@@ -11,9 +11,9 @@ export default async function handle(
 
   if (req.method === "DELETE") {
     const session = await getServerSession(req, res, authOptions);
+    const email = session?.user?.email;
     const userId = session?.user?.id;
-
-    if (!session || !userId) {
+    if (!session || !email || !userId) {
       return res.status(401).json({ error: "Unauthorized" });
     }
     const post = await prisma!.favorite.delete({
@@ -30,9 +30,10 @@ export default async function handle(
 
   if (req.method === "POST") {
     const session = await getServerSession(req, res, authOptions);
+    const email = session?.user?.email;
     const userId = session?.user?.id;
 
-    if (!session || !userId) {
+    if (!session || !email || !userId) {
       return res.status(401).json({ error: "Unauthorized" });
     }
     try {
