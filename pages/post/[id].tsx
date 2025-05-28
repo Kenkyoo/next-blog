@@ -51,6 +51,7 @@ async function deletePost(id: string): Promise<void> {
 async function savePost(id: string, isFavorited: boolean): Promise<void> {
   await fetch(`/api/favorite/${id}`, {
     method: isFavorited ? "DELETE" : "POST",
+    credentials: "include",
   });
   // Opcional: recargar o navegar si querés
   // Router.push("/");
