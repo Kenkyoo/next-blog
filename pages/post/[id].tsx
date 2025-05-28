@@ -103,9 +103,11 @@ const Post: React.FC<PostProps> = (props) => {
               </button>
             </>
           )}
-          <button onClick={handleFavorite}>
-            {isFavorited ? "★ Favorito" : "☆ Guardar"}
-          </button>
+          {userHasValidSession && (
+            <button onClick={handleFavorite}>
+              {isFavorited ? "★ Favorito" : "☆ Guardar"}
+            </button>
+          )}
         </div>
       </div>
       <style jsx>{`
