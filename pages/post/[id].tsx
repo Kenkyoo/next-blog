@@ -48,8 +48,17 @@ async function deletePost(id: string): Promise<void> {
   Router.push("/");
 }
 
+async function savePost(id: string, isFavorited: boolean): Promise<void> {
+  await fetch(`/api/favorite/${id}`, {
+    method: isFavorited ? "DELETE" : "POST",
+  });
+  // Opcional: recargar o navegar si querés
+  // Router.push("/");
+}
+
 const Post: React.FC<PostProps> = (props) => {
   const { data: session, status } = useSession();
+  const [isFavorited, setIsFavorited] = React.useState(false);
   if (status === "loading") {
     return <div>Authenticating ...</div>;
   }
@@ -59,6 +68,11 @@ const Post: React.FC<PostProps> = (props) => {
   if (!props.published) {
     title = `${title} (Draft)`;
   }
+
+  const handleFavorite = async () => {
+    await savePost(props.id, isFavorited);
+    setIsFavorited(!isFavorited);
+  };
 
   return (
     <Layout>
@@ -82,6 +96,9 @@ const Post: React.FC<PostProps> = (props) => {
         <div className="actions">
           {userHasValidSession && postBelongsToUser && (
             <>
+              <button onClick={handleFavorite}>
+                {isFavorited ? "★ Favorito" : "☆ Guardar"}
+              </button>
               <button onClick={() => publishPost(props.id)}>Publish</button>
               <button onClick={() => deletePost(props.id)}>Delete</button>
               <button onClick={() => Router.push(`/edit/${props.id}`)}>
