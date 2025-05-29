@@ -25,7 +25,10 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 };
 
 type Props = {
-  favorites: PostProps[];
+  favorites: {
+    id: string;
+    post: PostProps;
+  }[];
 };
 
 const Favorites: React.FC<Props> = (props) => {
@@ -48,7 +51,7 @@ const Favorites: React.FC<Props> = (props) => {
         <main>
           {props.favorites.map((favorite) => (
             <div key={favorite.id} className="post">
-              <Post post={favorite} />
+              <Post post={favorite.post} />
             </div>
           ))}
         </main>
