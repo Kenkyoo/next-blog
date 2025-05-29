@@ -1,110 +1,37 @@
 // pages/blog.tsx
 import React from "react";
-import Layout from "../components/Layout";
-import Post, { PostProps } from "../components/Post";
-import useSWR from "swr";
+import Image from "next/image";
+import Link from "next/link";
 
-// Define el tipo de la respuesta de la API para mejor tipado
-interface ApiResponse {
-  feed: PostProps[];
-  totalPosts: number;
-  currentPage: number;
-  pageSize: number;
-}
-
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
-
-const Blog = () => {
-  const [page, setPage] = React.useState(1);
-
-  const { data, error } = useSWR<ApiResponse>(
-    `/api/posts?page=${page}`,
-    fetcher
-  );
-
-  if (error) return <div>Error fetching posts</div>;
-  if (!data) return <div>Loading...</div>;
-
-  const { feed, totalPosts, pageSize } = data;
-  const totalPages = Math.ceil(totalPosts / pageSize);
-
-  const handleNextPage = () => {
-    if (page < totalPages) {
-      setPage(page + 1);
-    }
-  };
-
-  const handlePreviousPage = () => {
-    if (page > 1) {
-      setPage(page - 1);
-    }
-  };
-
+const Hero = () => {
   return (
-    <Layout>
-      <div className="page">
-        <h1>Public Feed</h1>
-        <main>
-          {feed.length === 0 ? (
-            <div>No posts found.</div>
-          ) : (
-            feed.map((post: PostProps) => (
-              <div key={post.id} className="post">
-                <Post post={post} />
-              </div>
-            ))
-          )}
-        </main>
-        <div className="pagination-controls">
-          <button onClick={handlePreviousPage} disabled={page === 1}>
-            Previous
-          </button>
-          <span>
-            Page {page} of {totalPages}
-          </span>
-          <button onClick={handleNextPage} disabled={page === totalPages}>
-            Next
-          </button>
-        </div>
+    <div className="relative bg-gradient-to-r from-purple-600 to-blue-600 h-screen text-white overflow-hidden">
+      <div className="absolute inset-0">
+        <Image
+          src="https://images.unsplash.com/photo-1522252234503-e356532cafd5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHw2fHxjb2RlfGVufDB8MHx8fDE2OTQwOTg0MTZ8MA&ixlib=rb-4.0.3&q=80&w=1080"
+          alt="Background Image"
+          className="object-cover object-center w-full h-full"
+          width={1920}
+          height={1080}
+        />
+        <div className="absolute inset-0 bg-black opacity-50" />
       </div>
-      <style jsx>{`
-        .post {
-          background: white;
-          transition: box-shadow 0.1s ease-in;
-        }
-
-        .post:hover {
-          box-shadow: 1px 1px 3px #aaa;
-        }
-
-        .post + .post {
-          margin-top: 2rem;
-        }
-
-        .pagination-controls {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          margin-top: 2rem;
-          gap: 1rem; /* Espacio entre los elementos */
-        }
-
-        .pagination-controls button {
-          padding: 0.5rem 1rem;
-          border: 1px solid #ccc;
-          background-color: #f0f0f0;
-          cursor: pointer;
-          border-radius: 4px;
-        }
-
-        .pagination-controls button:disabled {
-          background-color: #e0e0e0;
-          color: #a0a0a0;
-          cursor: not-allowed;
-        }
-      `}</style>
-    </Layout>
+      <div className="relative z-10 flex flex-col justify-center items-center h-full text-center">
+        <h1 className="text-5xl font-bold leading-tight mb-4">
+          Welcome to Our Awesome Website
+        </h1>
+        <p className="text-lg text-gray-300 mb-8">
+          Discover amazing features and services that await you.
+        </p>
+        <Link
+          href="/posts"
+          className="bg-white text-blue-600 py-2 px-4 rounded"
+        >
+          Get Started
+        </Link>
+      </div>
+    </div>
   );
 };
 
-export default Blog;
+export default Hero;

@@ -1,6 +1,7 @@
 import React from "react";
 import Router from "next/router";
 import ReactMarkdown from "react-markdown";
+import { Badge, Button, Card, HStack, Box } from "@chakra-ui/react";
 
 export type PostProps = {
   id: string;
@@ -11,45 +12,41 @@ export type PostProps = {
   } | null;
   content: string;
   published: boolean;
-  tags?: { name: string }[]; // <- agregá esto
+  tags?: { name: string }[];
 };
 
 const Post: React.FC<{ post: PostProps }> = ({ post }) => {
   const authorName = post.author ? post.author.name : "Unknown author";
   return (
-    <div onClick={() => Router.push("/post/[id]", `/post/${post.id}`)}>
-      <h2>{post.title}</h2>
-      <small>By {authorName}</small>
-      <ReactMarkdown>{post.content}</ReactMarkdown>
-      {post.tags && post.tags.length > 0 && (
-        <div className="tags">
-          {post.tags.map((tag, index) => (
-            <span key={index} className="tag">
-              {tag.name}
-            </span>
-          ))}
-        </div>
-      )}
-      <style jsx>{`
-        div {
-          color: inherit;
-          padding: 2rem;
-        }
-
-        .tags {
-          margin-top: 1rem;
-        }
-
-        .tag {
-          background-color: #f2f2f2;
-          border-radius: 0.25rem;
-          padding: 0.2rem 0.5rem;
-          margin-right: 0.5rem;
-          font-size: 0.85rem;
-          display: inline-block;
-        }
-      `}</style>
-    </div>
+    <Card.Root size="md">
+      <Card.Body>
+        <Card.Title mb="2">{post.title}</Card.Title>
+        <Card.Description>
+          <Box
+            textOverflow="ellipsis" // Añade "..." al final si se trunca
+            overflow="hidden" // Oculta el contenido excedente
+            maxHeight="auto" // Opcional: puedes fijar una altura si lo deseas, por ejemplo, height="80px"
+          >
+            <ReactMarkdown>{post.content}</ReactMarkdown>
+          </Box>
+        </Card.Description>
+        <HStack mt="2">By {authorName}</HStack>
+        <HStack mt="2">
+          {post.tags && post.tags.length > 0 && (
+            <div>
+              {post.tags.map((tag, index) => (
+                <Badge key={index}>{tag.name}</Badge>
+              ))}
+            </div>
+          )}
+        </HStack>
+      </Card.Body>
+      <Card.Footer>
+        <Button onClick={() => Router.push("/post/[id]", `/post/${post.id}`)}>
+          Leer
+        </Button>
+      </Card.Footer>
+    </Card.Root>
   );
 };
 

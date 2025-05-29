@@ -1,131 +1,61 @@
-import React from "react";
+import { Container } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
+import { Button, Menu, Portal } from "@chakra-ui/react";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/react";
 
-const Header: React.FC = () => {
-  const router = useRouter();
-  const isActive = (pathname: string) => router.pathname === pathname;
+const links = [
+  { href: "/", label: "Home" },
+  { href: "/profile", label: "Profile" },
+  { href: "/posts", label: "Posts" },
+  { href: "/drafts", label: "Drafts" },
+  { href: "/favorites", label: "Favorites" },
+];
+const Navbar = () => {
   const { data: session, status } = useSession();
-
-  let left = (
-    <div className="left">
-      <Link href="/" className="bold" data-active={isActive("/")}>
-        Feed
-      </Link>
-    </div>
-  );
-
-  let right = null;
-
+  console.log(session);
   if (status === "loading") {
-    right = (
-      <div className="right">
-        <p>Validating session ...</p>
-      </div>
-    );
-  }
-
-  if (!session) {
-    right = (
-      <div className="right">
-        <Link href="/api/auth/signin" data-active={isActive("/signup")}>
-          Log in
-        </Link>
-      </div>
-    );
-  }
-
-  if (session) {
-    left = (
-      <div className="left">
-        <Link href="/" className="bold" data-active={isActive("/")}>
-          Feed
-        </Link>
-        <Link href="/drafts" data-active={isActive("/drafts")}>
-          My drafts
-        </Link>
-        <Link href="/search" data-active={isActive("/search")}>
-          Search
-        </Link>
-        <Link href="/myPosts" data-active={isActive("/myPosts")}>
-          My Posts
-        </Link>
-        <Link href="/favorites" data-active={isActive("/favorites")}>
-          Favorites
-        </Link>
-      </div>
-    );
-    right = (
-      <div className="right">
-        <p>
-          {session.user?.name} ({session.user?.email})
-        </p>
-        <Link href="/create">New post</Link>
-        <button onClick={() => signOut()}>Log out</button>
-      </div>
-    );
+    return <p>Validating session ...</p>;
   }
 
   return (
-    <nav>
-      {left}
-      {right}
-      <style jsx>{`
-        nav {
-          display: flex;
-          padding: 2rem;
-          align-items: center;
-        }
-
-        .bold {
-          font-weight: bold;
-        }
-
-        a,
-        button {
-          text-decoration: none;
-          color: var(--geist-foreground);
-          display: inline-block;
-          border: 1px solid var(--geist-foreground);
-          padding: 0.5rem 1rem;
-          border-radius: 3px;
-          background: none;
-          cursor: pointer;
-        }
-
-        a + a,
-        a + button,
-        button + a {
-          margin-left: 1rem;
-        }
-
-        .left a[data-active="true"] {
-          color: gray;
-        }
-
-        .left,
-        .right {
-          display: flex;
-          align-items: center;
-        }
-
-        .right {
-          margin-left: auto;
-        }
-
-        .right p {
-          display: inline-block;
-          font-size: 13px;
-          padding-right: 1rem;
-        }
-
-        button {
-          border: none;
-        }
-      `}</style>
-    </nav>
+    <Container fluid>
+      <Flex gap="4">
+        {session ? (
+          <div>
+            <Menu.Root>
+              <Menu.Trigger asChild>
+                <Button variant="outline" size="sm">
+                  Open
+                </Button>
+              </Menu.Trigger>
+              <Portal>
+                <Menu.Positioner>
+                  <Menu.Content>
+                    {links.map((link) => (
+                      <Menu.Item key={link.label} value={link.href}>
+                        <Link href={link.href}>{link.label}</Link>
+                      </Menu.Item>
+                    ))}
+                  </Menu.Content>
+                </Menu.Positioner>
+              </Portal>
+            </Menu.Root>
+          </div>
+        ) : (
+          <p>App</p>
+        )}
+        <div>App</div>
+        <div>
+          {session ? (
+            <button onClick={() => signOut()}>Log out</button>
+          ) : (
+            <Link href="/api/auth/signin">Log in</Link>
+          )}
+        </div>
+      </Flex>
+    </Container>
   );
 };
 
-export default Header;
+export default Navbar;
