@@ -30,7 +30,8 @@ type Props = {
 
 const Favorites: React.FC<Props> = (props) => {
   const { data: session } = useSession();
-
+  console.log(props);
+  console.log(props.favorites);
   if (!session) {
     return (
       <Layout>
