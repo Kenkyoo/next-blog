@@ -21,7 +21,7 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
     <Card.Root size="md">
       <Card.Body>
         <Card.Title mb="2">{post.title}</Card.Title>
-        <Card.Description>
+        <Card.Description as="div">
           <Box
             textOverflow="ellipsis" // Añade "..." al final si se trunca
             overflow="hidden" // Oculta el contenido excedente
@@ -32,13 +32,11 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
         </Card.Description>
         <HStack mt="2">By {authorName}</HStack>
         <HStack mt="2">
-          {post.tags && post.tags.length > 0 && (
-            <div>
-              {post.tags.map((tag, index) => (
-                <Badge key={index}>{tag.name}</Badge>
-              ))}
-            </div>
-          )}
+          {post.tags &&
+            post.tags.length > 0 &&
+            post.tags.map((tag, index) => (
+              <Badge key={index}>{tag.name}</Badge>
+            ))}
         </HStack>
       </Card.Body>
       <Card.Footer>
