@@ -10,9 +10,9 @@ const Loader = () => {
       // Puedes ajustar el color de fondo si lo deseas
       // bg="gray.100"
     >
-      <VStack colorPalette="teal">
-        <Spinner color="colorPalette.600" />
-        <Text color="colorPalette.600">Loading...</Text>
+      <VStack>
+        <Spinner />
+        <Text>Loading...</Text>
       </VStack>
     </Flex>
   );

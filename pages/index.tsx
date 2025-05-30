@@ -26,10 +26,10 @@ const Hero = () => {
           Discover amazing features and services that await you.
         </p>
         <ButtonGroup>
-          <Button>
+          <Button p="4" color="gray.950" bg="gray.100">
             <Link href="/posts">Get started</Link>
           </Button>
-          <Button>
+          <Button p="4" color="gray.950" bg="gray.100">
             <Link href="/login">Log in</Link>
           </Button>
         </ButtonGroup>

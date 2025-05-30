@@ -36,8 +36,7 @@ const Navbar = () => {
     >
       <div className="flex gap-8">
         {session ? (
-          <Menu.Root>
-            +
+          <Menu.Root size={"md"}>
             <Menu.Trigger asChild>
               <Icon size="lg">
                 <FiMenu />
@@ -45,7 +44,7 @@ const Navbar = () => {
             </Menu.Trigger>
             <Portal>
               <Menu.Positioner>
-                <Menu.Content>
+                <Menu.Content p="4">
                   {links.map((link) => (
                     <Menu.Item key={link.label} value={link.href}>
                       <Link href={link.href}>{link.label}</Link>
@@ -78,7 +77,9 @@ const Navbar = () => {
         {session ? (
           <Menu.Root>
             <Menu.Trigger asChild>
-              <UserAvatar src={userImage} />
+              <Button variant="ghost">
+                <UserAvatar src={userImage} />
+              </Button>
             </Menu.Trigger>
             <Portal>
               <Menu.Positioner>
@@ -86,7 +87,6 @@ const Navbar = () => {
                   <Menu.Item value="new-txt">New Text File</Menu.Item>
                   <Menu.Item value="new-file">New File...</Menu.Item>
                   <Menu.Item value="new-win">
-                    {" "}
                     <Button onClick={() => signOut()}>Log out</Button>
                   </Menu.Item>
                 </Menu.Content>
