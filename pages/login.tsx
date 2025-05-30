@@ -12,7 +12,7 @@ const Login = () => {
         align="center" // Centra verticalmente los elementos hijos
         justify="center" // Centra horizontalmente los elementos hijos
         flexDirection="column"
-        gap="8"
+        gap="2"
         // Puedes ajustar el color de fondo si lo deseas
         // bg="gray.100"
       >

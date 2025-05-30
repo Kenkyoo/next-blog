@@ -36,17 +36,17 @@ const Navbar = () => {
     >
       <div className="flex gap-8">
         {session ? (
-          <Menu.Root size={"md"}>
+          <Menu.Root size={"md"} variant="subtle">
             <Menu.Trigger asChild>
-              <Icon size="lg">
+              <Icon size="lg" className="cursor-pointer">
                 <FiMenu />
               </Icon>
             </Menu.Trigger>
             <Portal>
               <Menu.Positioner>
-                <Menu.Content p="4">
+                <Menu.Content py="8" px="10">
                   {links.map((link) => (
-                    <Menu.Item key={link.label} value={link.href}>
+                    <Menu.Item key={link.label} value={link.href} mt="2">
                       <Link href={link.href}>{link.label}</Link>
                     </Menu.Item>
                   ))}
@@ -84,8 +84,12 @@ const Navbar = () => {
             <Portal>
               <Menu.Positioner>
                 <Menu.Content>
-                  <Menu.Item value="new-txt">New Text File</Menu.Item>
-                  <Menu.Item value="new-file">New File...</Menu.Item>
+                  <Menu.Item value="new-txt">
+                    <Link href="/profile">Profile</Link>
+                  </Menu.Item>
+                  <Menu.Item value="new-file">
+                    <Link href="/new post">New post</Link>
+                  </Menu.Item>
                   <Menu.Item value="new-win">
                     <Button onClick={() => signOut()}>Log out</Button>
                   </Menu.Item>

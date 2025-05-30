@@ -17,6 +17,13 @@ export type PostProps = {
 
 const Post: React.FC<{ post: PostProps }> = ({ post }) => {
   const authorName = post.author ? post.author.name : "Unknown author";
+  const MAX_CHARS = 150; // Puedes ajustar este valor
+
+  const truncatedContent =
+    post.content.length > MAX_CHARS
+      ? post.content.substring(0, MAX_CHARS) + "..."
+      : post.content;
+
   return (
     <Card.Root variant="subtle" size="md">
       <Card.Body>
@@ -27,7 +34,7 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
             overflow="hidden" // Oculta el contenido excedente
             maxHeight="auto" // Opcional: puedes fijar una altura si lo deseas, por ejemplo, height="80px"
           >
-            <ReactMarkdown>{post.content}</ReactMarkdown>
+            <ReactMarkdown>{truncatedContent}</ReactMarkdown>
           </Box>
         </Card.Description>
         <HStack mt="2">By {authorName}</HStack>
@@ -40,7 +47,10 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
         </HStack>
       </Card.Body>
       <Card.Footer>
-        <Button onClick={() => Router.push("/post/[id]", `/post/${post.id}`)}>
+        <Button
+          variant="solid"
+          onClick={() => Router.push("/post/[id]", `/post/${post.id}`)}
+        >
           Leer
         </Button>
       </Card.Footer>

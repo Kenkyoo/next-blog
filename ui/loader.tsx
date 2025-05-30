@@ -11,7 +11,10 @@ const Loader = () => {
       // bg="gray.100"
     >
       <VStack>
-        <Spinner />
+        <Spinner
+          size="xl" // Make sure it's big enough to see
+          color="blue.500" // Use a standard Chakra UI color token
+        />
         <Text>Loading...</Text>
       </VStack>
     </Flex>

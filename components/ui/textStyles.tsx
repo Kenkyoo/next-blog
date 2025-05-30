@@ -7,7 +7,7 @@ export const textStyles = defineTextStyles({
       fontFamily: "Inter",
       fontWeight: "500",
       fontSize: "16px",
-      lineHeight: "24",
+      lineHeight: "2",
       letterSpacing: "0",
       textDecoration: "None",
       textTransform: "None",
