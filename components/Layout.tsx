@@ -10,9 +10,19 @@ type Props = {
 const Layout: React.FC<Props> = (props) => (
   <div>
     <Header />
-    <Separator bg="gray.50" />
+    <Separator
+      size="md"
+      orientation="horizontal"
+      colorPalette="gray"
+      variant="solid"
+    />
     <Wrapper>{props.children}</Wrapper>
-    <Separator color="gray.50" />
+    <Separator
+      size="md"
+      orientation="horizontal"
+      colorPalette="gray"
+      variant="solid"
+    />
     <Footer />
   </div>
 );

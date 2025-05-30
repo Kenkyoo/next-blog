@@ -1,21 +1,37 @@
+// Loader.tsx
 import { Spinner, Text, VStack, Flex } from "@chakra-ui/react";
 
 const Loader = () => {
   return (
     <Flex
-      minH="100vh" // Ocupa el 100% del alto del viewport
-      minW="100vw" // Ocupa el 100% del ancho del viewport
-      align="center" // Centra verticalmente los elementos hijos
-      justify="center" // Centra horizontalmente los elementos hijos
-      // Puedes ajustar el color de fondo si lo deseas
-      // bg="gray.100"
+      minH="100vh"
+      minW="100vw"
+      align="center"
+      justify="center"
+      // Si quieres un fondo que contraste con el spinner
+      // bg="gray.50" // Color de fondo para light mode
+      // _dark={{ bg: "gray.900" }} // Color de fondo para dark mode
     >
       <VStack>
+        {" "}
+        {/* Añadido spacing para separar el spinner y el texto */}
         <Spinner
-          size="xl" // Make sure it's big enough to see
-          color="blue.500" // Use a standard Chakra UI color token
+          size="xl" // Hazlo más grande para asegurarte de que se vea
+          // Usa un color que contraste bien con ambos modos (light/dark)
+          // Puedes usar un color de tu tema o uno por defecto de Chakra UI
+          color="blue.500" // Un color estándar de Chakra UI
+          // O si quieres que cambie con el modo:
+          // color={useColorModeValue("blue.500", "blue.200")}
         />
-        <Text>Loading...</Text>
+        <Text
+          fontSize="lg" // Ajusta el tamaño del texto si quieres
+          // Usa un color que contraste bien
+          color="gray.700" // Un color estándar de Chakra UI
+          // O si quieres que cambie con el modo:
+          // color={useColorModeValue("gray.700", "gray.200")}
+        >
+          Loading...
+        </Text>
       </VStack>
     </Flex>
   );
