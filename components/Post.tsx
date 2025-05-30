@@ -18,7 +18,7 @@ export type PostProps = {
 const Post: React.FC<{ post: PostProps }> = ({ post }) => {
   const authorName = post.author ? post.author.name : "Unknown author";
   return (
-    <Card.Root size="md">
+    <Card.Root variant="subtle" size="md">
       <Card.Body>
         <Card.Title mb="2">{post.title}</Card.Title>
         <Card.Description as="div">

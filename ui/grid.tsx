@@ -4,8 +4,10 @@ const GridCols = ({ children }: { children: React.ReactNode }) => {
   return (
     <Grid
       display="grid"
-      gap="4"
-      gridTemplateColumns="repeat(3, minmax(0, 1fr))"
+      gap="8"
+      flexDirection="column"
+      justifyContent="center"
+      alignItems="center"
     >
       {children}
     </Grid>

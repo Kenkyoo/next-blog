@@ -1,68 +1,30 @@
-"use client";
-
 import {
   Box,
-  chakra,
-  Container,
+  Separator,
+  Heading,
+  Highlight,
   Stack,
   Text,
-  VisuallyHidden,
 } from "@chakra-ui/react";
-import { FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
-import { ReactNode } from "react";
 
-const SocialButton = ({
-  children,
-  label,
-  href,
-}: {
-  children: ReactNode;
-  label: string;
-  href: string;
-}) => {
+const Footer = () => {
   return (
-    <chakra.button
-      rounded={"full"}
-      w={8}
-      h={8}
-      cursor={"pointer"}
-      as={"a"}
-      ref={href}
-      display={"inline-flex"}
-      alignItems={"center"}
-      justifyContent={"center"}
-      transition={"background 0.3s ease"}
-    >
-      <VisuallyHidden>{label}</VisuallyHidden>
-      {children}
-    </chakra.button>
+    <>
+      <Separator />
+      <Box width="100%" padding="8">
+        <Stack direction="row">
+          <Heading size="3xl" letterSpacing="tight">
+            <Highlight query="with speed" styles={{ color: "teal.600" }}>
+              Create accessible React apps with speed
+            </Highlight>
+          </Heading>
+          <Text fontSize="md" color="fg.muted">
+            Chakra UI is a simple.
+          </Text>
+        </Stack>
+      </Box>
+    </>
   );
 };
 
-export default function Footer() {
-  return (
-    <Box>
-      <Container
-        as={Stack}
-        maxW={"6xl"}
-        py={4}
-        direction={{ base: "column", md: "row" }}
-        justifyContent={{ base: "center", md: "space-between" }}
-        alignItems={{ base: "center", md: "center" }}
-      >
-        <Text>© 2022 Chakra Templates. All rights reserved</Text>
-        <Stack direction={"row"}>
-          <SocialButton label={"Twitter"} href={"#"}>
-            <FaTwitter />
-          </SocialButton>
-          <SocialButton label={"YouTube"} href={"#"}>
-            <FaYoutube />
-          </SocialButton>
-          <SocialButton label={"Instagram"} href={"#"}>
-            <FaInstagram />
-          </SocialButton>
-        </Stack>
-      </Container>
-    </Box>
-  );
-}
+export default Footer;

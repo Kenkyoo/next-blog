@@ -8,6 +8,7 @@ import { Flex } from "@chakra-ui/react";
 import { Icon } from "@chakra-ui/react";
 import { HiHeart } from "react-icons/hi";
 import { Text } from "@chakra-ui/react";
+import UserAvatar from "../ui/avatar";
 
 const links = [
   { href: "/", label: "Home" },
@@ -18,7 +19,7 @@ const links = [
 ];
 const Navbar = () => {
   const { data: session, status } = useSession();
-  console.log(session?.user.image);
+  const userImage = session?.user?.image as string;
   if (status === "loading") {
     return <p>Validating session ...</p>;
   }
@@ -74,7 +75,23 @@ const Navbar = () => {
       </div>
       <div className="flex gap-3">
         {session ? (
-          <button onClick={() => signOut()}>Log out</button>
+          <Menu.Root>
+            <Menu.Trigger asChild>
+              <UserAvatar src={userImage} />
+            </Menu.Trigger>
+            <Portal>
+              <Menu.Positioner>
+                <Menu.Content>
+                  <Menu.Item value="new-txt">New Text File</Menu.Item>
+                  <Menu.Item value="new-file">New File...</Menu.Item>
+                  <Menu.Item value="new-win">
+                    {" "}
+                    <button onClick={() => signOut()}>Log out</button>
+                  </Menu.Item>
+                </Menu.Content>
+              </Menu.Positioner>
+            </Portal>
+          </Menu.Root>
         ) : (
           <Link href="/api/auth/signin">Log in</Link>
         )}
