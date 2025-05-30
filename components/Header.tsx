@@ -55,11 +55,21 @@ const Navbar = () => {
             </Portal>
           </Menu.Root>
         ) : (
-          <ChakraLink asChild>
-            <NextLink href="/">Home</NextLink>
-          </ChakraLink>
+          <Button variant="ghost"></Button>
         )}
-
+        <ChakraLink asChild>
+          <Icon size="2xl" color="teal.600">
+            <svg viewBox="0 0 32 32">
+              <g fill="currentColor">
+                <path d="M16,11.5a3,3,0,1,0-3-3A3,3,0,0,0,16,11.5Z" />
+                <path d="M16.868.044A8.579,8.579,0,0,0,16,0a15.99,15.99,0,0,0-.868,31.956A8.579,8.579,0,0,0,16,32,15.99,15.99,0,0,0,16.868.044ZM16,26.5a3,3,0,1,1,3-3A3,3,0,0,1,16,26.5ZM16,15A8.483,8.483,0,0,0,8.788,27.977,13.986,13.986,0,0,1,16,2a6.5,6.5,0,0,1,0,13Z" />
+              </g>
+            </svg>
+          </Icon>
+        </ChakraLink>
+        <Text fontWeight="bold" textStyle="xl" className="me-5">
+          BLOG
+        </Text>
         <ChakraLink asChild hideBelow="md">
           <NextLink href="/posts">Feed</NextLink>
         </ChakraLink>
@@ -71,11 +81,11 @@ const Navbar = () => {
         <Icon size="lg" color="pink.700" hideBelow="md">
           <HiHeart />
         </Icon>
-        <Text hideBelow="md">Dev by Kenkyo</Text>
+        <Text hideBelow="md">Chakra</Text>
       </div>
       <div className="flex gap-3">
         {session ? (
-          <Menu.Root>
+          <Menu.Root size={"md"} variant="subtle">
             <Menu.Trigger asChild>
               <Button variant="ghost">
                 <UserAvatar src={userImage} />
@@ -83,7 +93,7 @@ const Navbar = () => {
             </Menu.Trigger>
             <Portal>
               <Menu.Positioner>
-                <Menu.Content>
+                <Menu.Content py="8" px="10">
                   <Menu.Item value="new-txt">
                     <Link href="/profile">Profile</Link>
                   </Menu.Item>
@@ -91,14 +101,31 @@ const Navbar = () => {
                     <Link href="/new post">New post</Link>
                   </Menu.Item>
                   <Menu.Item value="new-win">
-                    <Button onClick={() => signOut()}>Log out</Button>
+                    <Button
+                      bg={{ base: "gray.950", _dark: "gray.50" }}
+                      color={{ base: "gray.50", _dark: "gray.950" }}
+                      variant="solid"
+                      px="2"
+                      onClick={() => signOut()}
+                    >
+                      Log out
+                    </Button>
                   </Menu.Item>
                 </Menu.Content>
               </Menu.Positioner>
             </Portal>
           </Menu.Root>
         ) : (
-          <Link href="/login">Log in</Link>
+          <Link href="/login">
+            <Button
+              bg={{ base: "gray.950", _dark: "gray.50" }}
+              color={{ base: "gray.50", _dark: "gray.950" }}
+              variant="solid"
+              px="4"
+            >
+              Log in
+            </Button>
+          </Link>
         )}
         <ToggleMode />
       </div>

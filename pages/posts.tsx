@@ -38,7 +38,12 @@ const Posts = () => {
 
   return (
     <Layout>
-      <Separator variant="solid" size="md" />
+      <Separator
+        size="md"
+        orientation="horizontal"
+        colorPalette={{ base: "gray.50", _dark: "gray.950" }}
+        variant="solid"
+      />
       <GridCols>
         <Title />
         <Main>

@@ -48,7 +48,10 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
       </Card.Body>
       <Card.Footer>
         <Button
+          bg={{ base: "gray.950", _dark: "gray.50" }}
+          color={{ base: "gray.50", _dark: "gray.950" }}
           variant="solid"
+          px="4"
           onClick={() => Router.push("/post/[id]", `/post/${post.id}`)}
         >
           Leer

@@ -13,7 +13,7 @@ const Layout: React.FC<Props> = (props) => (
     <Separator
       size="md"
       orientation="horizontal"
-      colorPalette="gray"
+      colorPalette={{ base: "gray.950", _dark: "gray.50" }}
       variant="solid"
     />
     <Wrapper>{props.children}</Wrapper>
