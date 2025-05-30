@@ -9,6 +9,7 @@ import { Icon } from "@chakra-ui/react";
 import { HiHeart } from "react-icons/hi";
 import { Text } from "@chakra-ui/react";
 import UserAvatar from "../ui/avatar";
+import { FiMenu } from "react-icons/fi";
 
 const links = [
   { href: "/", label: "Home" },
@@ -38,9 +39,9 @@ const Navbar = () => {
           <Menu.Root>
             +
             <Menu.Trigger asChild>
-              <Button variant="outline" size="sm">
-                Open
-              </Button>
+              <Icon size="lg">
+                <FiMenu />
+              </Icon>
             </Menu.Trigger>
             <Portal>
               <Menu.Positioner>
@@ -86,14 +87,14 @@ const Navbar = () => {
                   <Menu.Item value="new-file">New File...</Menu.Item>
                   <Menu.Item value="new-win">
                     {" "}
-                    <button onClick={() => signOut()}>Log out</button>
+                    <Button onClick={() => signOut()}>Log out</Button>
                   </Menu.Item>
                 </Menu.Content>
               </Menu.Positioner>
             </Portal>
           </Menu.Root>
         ) : (
-          <Link href="/api/auth/signin">Log in</Link>
+          <Link href="/login">Log in</Link>
         )}
         <ToggleMode />
       </div>

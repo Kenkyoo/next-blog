@@ -3,6 +3,8 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import background from "@/public/background.jpeg";
+import { Button, ButtonGroup } from "@chakra-ui/react";
+
 const Hero = () => {
   return (
     <div className="relative bg-gradient-to-r from-purple-600 to-blue-600 h-screen text-white overflow-hidden">
@@ -23,12 +25,14 @@ const Hero = () => {
         <p className="text-lg text-gray-300 mb-8">
           Discover amazing features and services that await you.
         </p>
-        <Link
-          href="/posts"
-          className="bg-white text-blue-600 py-2 px-4 rounded"
-        >
-          Get Started
-        </Link>
+        <ButtonGroup>
+          <Button>
+            <Link href="/posts">Get started</Link>
+          </Button>
+          <Button>
+            <Link href="/login">Log in</Link>
+          </Button>
+        </ButtonGroup>
       </div>
     </div>
   );
