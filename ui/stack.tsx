@@ -3,7 +3,7 @@ import { Container } from "@chakra-ui/react";
 
 const Main = ({ children }: { children: React.ReactNode }) => {
   return (
-    <Container maxW="md" px="2">
+    <Container px="">
       <Stack>{children}</Stack>
     </Container>
   );

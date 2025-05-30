@@ -6,7 +6,7 @@ import useSWR from "swr";
 import Main from "../ui/stack";
 import Title from "../ui/heading";
 import Subtitle from "../ui/subtitle";
-
+import GridCols from "@/ui/grid";
 // Importa los componentes de paginación de Chakra UI
 import { ButtonGroup, IconButton } from "@chakra-ui/react";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
@@ -34,53 +34,53 @@ const Posts = () => {
   if (!data) return <div>Loading...</div>;
 
   const { feed, totalPosts, pageSize } = data;
-  const totalPages = Math.ceil(totalPosts / pageSize);
 
   return (
     <Layout>
-      <Title />
-      <Main>
-        {feed.length === 0 ? (
-          <Subtitle text="No posts found" />
-        ) : (
-          feed.map((post: PostProps) => (
-            <div key={post.id} className="post">
-              <Post post={post} />
-            </div>
-          ))
-        )}
-      </Main>
+      <GridCols>
+        <Title />
+        <Main>
+          {feed.length === 0 ? (
+            <Subtitle text="No posts found" />
+          ) : (
+            feed.map((post: PostProps) => (
+              <div key={post.id} className="post">
+                <Post post={post} />
+              </div>
+            ))
+          )}
+        </Main>
 
-      {/* Integración del componente de paginación de Chakra UI */}
-      <Pagination.Root
-        count={totalPosts}
-        pageSize={pageSize}
-        page={page}
-        onPageChange={(nextPage) => setPage(nextPage.page)}
-      >
-        <ButtonGroup variant="outline" size="sm">
-          <Pagination.PrevTrigger asChild>
-            <IconButton>
-              <LuChevronLeft />
-            </IconButton>
-          </Pagination.PrevTrigger>
-
-          <Pagination.Items
-            render={(itemPage) => (
-              <IconButton variant={{ base: "ghost", _selected: "outline" }}>
-                {itemPage.value}
+        {/* Integración del componente de paginación de Chakra UI */}
+        <Pagination.Root
+          count={totalPosts}
+          pageSize={pageSize}
+          page={page}
+          onPageChange={(nextPage) => setPage(nextPage.page)}
+        >
+          <ButtonGroup variant="outline" size="sm">
+            <Pagination.PrevTrigger asChild>
+              <IconButton>
+                <LuChevronLeft />
               </IconButton>
-            )}
-          />
+            </Pagination.PrevTrigger>
 
-          <Pagination.NextTrigger asChild>
-            <IconButton>
-              <LuChevronRight />
-            </IconButton>
-          </Pagination.NextTrigger>
-        </ButtonGroup>
-      </Pagination.Root>
-      <p>{totalPages}</p>
+            <Pagination.Items
+              render={(itemPage) => (
+                <IconButton variant={{ base: "ghost", _selected: "outline" }}>
+                  {itemPage.value}
+                </IconButton>
+              )}
+            />
+
+            <Pagination.NextTrigger asChild>
+              <IconButton>
+                <LuChevronRight />
+              </IconButton>
+            </Pagination.NextTrigger>
+          </ButtonGroup>
+        </Pagination.Root>
+      </GridCols>
     </Layout>
   );
 };
