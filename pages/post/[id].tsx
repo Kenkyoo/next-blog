@@ -6,6 +6,10 @@ import Layout from "../../components/Layout";
 import { PostProps } from "../../components/Post";
 import { useSession } from "next-auth/react";
 import prisma from "../../lib/prisma";
+import { Box, Center } from "@chakra-ui/react";
+import Subtitle from "@/ui/subtitle";
+import { Text, HStack, Tag } from "@chakra-ui/react";
+import { Button, Group } from "@chakra-ui/react";
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   if (!prisma) {
@@ -77,82 +81,66 @@ const Post: React.FC<PostProps> = (props) => {
 
   return (
     <Layout>
-      <div>
-        <h2>{title}</h2>
-        <p>By {props?.author?.name || "Unknown author"}</p>
-        <ReactMarkdown>{props.content}</ReactMarkdown>
-        {props.tags && props.tags.length > 0 && (
-          <div className="tags">
-            {props.tags.map((tag, index) => (
-              <button
-                key={index}
-                className="tag"
-                onClick={() => Router.push(`/tags/${tag.name}`)}
-              >
-                #{tag.name}
-              </button>
-            ))}
-          </div>
-        )}
-        <div className="actions">
+      <Center px="8" py="6">
+        <Box
+          p="4"
+          borderWidth="1px"
+          borderColor="border.disabled"
+          color="fg.disabled"
+          textStyle="body"
+          spaceY="4"
+          minH="80vh"
+        >
+          <Subtitle text={title} />
+          <Text fontWeight="semibold" textStyle="md">
+            By {props?.author?.name || "Unknown author"}
+          </Text>
+          <Box letterSpacing="tighter">
+            <ReactMarkdown>{props.content}</ReactMarkdown>
+          </Box>
+          {props.tags && props.tags.length > 0 && (
+            <>
+              <HStack>
+                {props.tags.map((tag, index) => (
+                  <Tag.Root
+                    colorPalette="teal"
+                    size="md"
+                    variant="subtle"
+                    key={index}
+                  >
+                    <Tag.Label onClick={() => Router.push(`/tags/${tag.name}`)}>
+                      {tag.name}
+                    </Tag.Label>
+                  </Tag.Root>
+                ))}
+              </HStack>
+            </>
+          )}
           {userHasValidSession && postBelongsToUser && (
             <>
-              <button onClick={() => publishPost(props.id)}>Publish</button>
-              <button onClick={() => deletePost(props.id)}>Delete</button>
-              <button onClick={() => Router.push(`/edit/${props.id}`)}>
-                Edit
-              </button>
+              <Group>
+                <Button variant="outline" onClick={() => publishPost(props.id)}>
+                  Publish
+                </Button>
+                <Button variant="outline" onClick={() => deletePost(props.id)}>
+                  Delete
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => Router.push(`/edit/${props.id}`)}
+                >
+                  Edit
+                </Button>
+              </Group>
             </>
           )}
           {userHasValidSession && (
-            <button onClick={handleFavorite}>
+            <Button variant="ghost" onClick={handleFavorite}>
               {isFavorited ? "★ Favorito" : "☆ Guardar"}
-            </button>
+            </Button>
           )}
-        </div>
-      </div>
-      <style jsx>{`
-        .page {
-          background: var(--geist-background);
-          padding: 2rem;
-        }
-
-        .actions {
-          margin-top: 2rem;
-        }
-
-        .tags {
-          margin-top: 1rem;
-          display: flex;
-          flex-wrap: wrap;
-          gap: 0.5rem;
-        }
-
-        .tag {
-          background-color: #f3f3f3;
-          border: none;
-          padding: 0.4rem 0.8rem;
-          border-radius: 999px;
-          cursor: pointer;
-          font-size: 0.875rem;
-          transition: background-color 0.2s ease;
-        }
-
-        .tag:hover {
-          background-color: #ddd;
-        }
-
-        button {
-          background: #ececec;
-          border: 0;
-          border-radius: 0.125rem;
-          padding: 1rem 2rem;
-        }
-
-        button + button {
-          margin-left: 1rem;
-        }
-      `}</style>
+        </Box>
+      </Center>
     </Layout>
   );
 };

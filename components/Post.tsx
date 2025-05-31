@@ -1,7 +1,7 @@
 import React from "react";
 import Router from "next/router";
 import ReactMarkdown from "react-markdown";
-import { Badge, Button, Card, HStack, Box } from "@chakra-ui/react";
+import { Tag, Button, Card, HStack, Box } from "@chakra-ui/react";
 
 export type PostProps = {
   id: string;
@@ -42,7 +42,16 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
           {post.tags &&
             post.tags.length > 0 &&
             post.tags.map((tag, index) => (
-              <Badge key={index}>{tag.name}</Badge>
+              <Tag.Root
+                colorPalette="teal"
+                size="md"
+                variant="subtle"
+                key={index}
+              >
+                <Tag.Label onClick={() => Router.push(`/tags/${tag.name}`)}>
+                  {tag.name}
+                </Tag.Label>
+              </Tag.Root>
             ))}
         </HStack>
       </Card.Body>
