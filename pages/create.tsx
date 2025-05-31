@@ -52,6 +52,7 @@ const Draft: React.FC = () => {
           textStyle="body"
           spaceY="4"
           minH="80vh"
+          bg="bg.subtle"
         >
           <Subtitle text="Create a new post" />
           <Fieldset.Root colorPalette="gray" size="lg" maxW="md">
@@ -96,7 +97,8 @@ const Draft: React.FC = () => {
                 </Field.Root>
               </Fieldset.Content>
               <Input
-                colorPalette="teal"
+                bg={{ base: "gray.950", _dark: "gray.50" }}
+                color={{ base: "gray.50", _dark: "gray.950" }}
                 disabled={!content || !title}
                 type="submit"
                 value="Create"

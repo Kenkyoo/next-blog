@@ -4,6 +4,9 @@ import { useSession, getSession } from "next-auth/react";
 import Layout from "../components/Layout";
 import Post, { PostProps } from "../components/Post";
 import prisma from "../lib/prisma";
+import Main from "../ui/stack";
+import Subtitle from "../ui/subtitle";
+import GridCols from "@/ui/grid";
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await getSession({ req });
@@ -46,30 +49,16 @@ const Favorites: React.FC<Props> = (props) => {
 
   return (
     <Layout>
-      <div className="page">
-        <h1>My Favorites</h1>
-        <main>
+      <GridCols>
+        <Subtitle text="Favorites" />
+        <Main>
           {props.favorites.map((favorite) => (
             <div key={favorite.id} className="post">
               <Post post={favorite.post} />
             </div>
           ))}
-        </main>
-      </div>
-      <style jsx>{`
-        .post {
-          background: var(--geist-background);
-          transition: box-shadow 0.1s ease-in;
-        }
-
-        .post:hover {
-          box-shadow: 1px 1px 3px #aaa;
-        }
-
-        .post + .post {
-          margin-top: 2rem;
-        }
-      `}</style>
+        </Main>
+      </GridCols>
     </Layout>
   );
 };

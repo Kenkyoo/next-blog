@@ -9,8 +9,8 @@ import prisma from "../../lib/prisma";
 import { Box, Center } from "@chakra-ui/react";
 import Subtitle from "@/ui/subtitle";
 import { Text, HStack, Tag } from "@chakra-ui/react";
-import { Button, Group } from "@chakra-ui/react";
-
+import { Button, Group, Float, Badge } from "@chakra-ui/react";
+import { HiAtSymbol, HiStar } from "react-icons/hi";
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   if (!prisma) {
     throw new Error("Prisma client is not initialized");
@@ -83,6 +83,7 @@ const Post: React.FC<PostProps> = (props) => {
     <Layout>
       <Center px="8" py="6">
         <Box
+          position="relative"
           p="4"
           borderWidth="1px"
           borderColor="border.disabled"
@@ -122,6 +123,7 @@ const Post: React.FC<PostProps> = (props) => {
             <>
               <Group>
                 <Button
+                  p="2"
                   bg={{ base: "gray.950", _dark: "gray.50" }}
                   color={{ base: "gray.50", _dark: "gray.950" }}
                   onClick={() => publishPost(props.id)}
@@ -129,6 +131,7 @@ const Post: React.FC<PostProps> = (props) => {
                   Publish
                 </Button>
                 <Button
+                  p="2"
                   bg={{ base: "gray.950", _dark: "gray.50" }}
                   color={{ base: "gray.50", _dark: "gray.950" }}
                   onClick={() => deletePost(props.id)}
@@ -136,6 +139,7 @@ const Post: React.FC<PostProps> = (props) => {
                   Delete
                 </Button>
                 <Button
+                  p="2"
                   bg={{ base: "gray.950", _dark: "gray.50" }}
                   color={{ base: "gray.50", _dark: "gray.950" }}
                   onClick={() => Router.push(`/edit/${props.id}`)}
@@ -146,9 +150,13 @@ const Post: React.FC<PostProps> = (props) => {
             </>
           )}
           {userHasValidSession && (
-            <Button variant="ghost" onClick={handleFavorite}>
-              {isFavorited ? "★ Favorito" : "☆ Guardar"}
-            </Button>
+            <Float placement="top-end">
+              <Button variant="ghost" onClick={handleFavorite}>
+                <Badge variant="solid" colorPalette="teal">
+                  Save{isFavorited ? <HiStar /> : <HiAtSymbol />}
+                </Badge>
+              </Button>
+            </Float>
           )}
         </Box>
       </Center>
