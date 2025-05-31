@@ -150,10 +150,10 @@ const Post: React.FC<PostProps> = (props) => {
             </>
           )}
           {userHasValidSession && (
-            <Float placement="top-end">
+            <Float offset="4" placement="top-end">
               <Button variant="ghost" onClick={handleFavorite}>
                 <Badge variant="solid" colorPalette="teal">
-                  Save{isFavorited ? <HiStar /> : <HiAtSymbol />}
+                  Save{isFavorited ? <HiAtSymbol /> : <HiStar />}
                 </Badge>
               </Button>
             </Float>

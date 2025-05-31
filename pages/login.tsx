@@ -14,14 +14,7 @@ const Login = () => {
         // Puedes ajustar el color de fondo si lo deseas
         // bg="gray.100"
       >
-        <Box
-          p="4"
-          borderWidth="1px"
-          borderColor="border.disabled"
-          color="fg.disabled"
-          textStyle="body"
-          spaceY="8"
-        >
+        <Box p="4" color="fg.disabled" textStyle="body" spaceY="8">
           <Stack>
             <Heading size="3xl" letterSpacing="tight">
               <Highlight query="with speed" styles={{ color: "teal.600" }}>
@@ -63,8 +56,15 @@ const Login = () => {
                 </Field.Root>
               </Fieldset.Content>
 
-              <Button type="submit" alignSelf="flex-start">
-                <Link href="/api/auth/signin">Log in</Link>
+              <Button
+                bg={{ base: "gray.950", _dark: "gray.50" }}
+                color={{ base: "gray.50", _dark: "gray.950" }}
+                variant="solid"
+                px="4"
+                type="submit"
+                alignSelf="center"
+              >
+                <Link href="/api/auth/signin">Log in with Github</Link>
               </Button>
             </Fieldset.Root>
           </Box>

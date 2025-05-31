@@ -1,7 +1,14 @@
-import { useSession } from "next-auth/react";
+// pages/myposts.tsx
+
+import { useSession, getSession } from "next-auth/react";
 import Link from "next/link";
-import MyPosts from "./myPosts";
+import Post, { PostProps } from "../components/Post";
+import prisma from "../lib/prisma";
 import Layout from "../components/Layout";
+import { GetServerSideProps } from "next";
+import Main from "../ui/stack";
+import Subtitle from "../ui/subtitle";
+import GridCols from "@/ui/grid";
 import {
   Container,
   Box,
@@ -13,49 +20,83 @@ import {
   Text,
 } from "@chakra-ui/react";
 
-export default function Component() {
-  const { data: session, status } = useSession();
-  console.log(session?.user);
-  const userImage = session?.user?.image as string;
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const session = await getSession({ req });
 
-  if (status === "authenticated") {
+  if (!session?.user) {
+    res.statusCode = 403;
+    return { props: { myPosts: [] } };
+  }
+
+  const myPosts = await prisma!.post.findMany({
+    where: {
+      author: { email: session.user.email ?? undefined },
+    },
+    include: {
+      author: {
+        select: { name: true },
+      },
+    },
+  });
+
+  return {
+    props: {
+      myPosts,
+    },
+  };
+};
+
+type Props = {
+  myPosts: PostProps[];
+};
+
+const MyPosts: React.FC<Props> = ({ myPosts }) => {
+  const { data: session, status } = useSession();
+
+  if (!session) {
     return (
       <Layout>
-        <Container textStyle="body" fluid>
-          <Flex
-            align="center" // Centra verticalmente los elementos hijos
-            justify="center" // Centra horizontalmente los elementos hijos
-            flexDirection="column"
-            gap="4"
-            // Puedes ajustar el color de fondo si lo deseas
-            // bg="gray.100"
-          >
-            <Box
-              p="4"
-              borderWidth="1px"
-              borderColor="border.disabled"
-              color="fg.disabled"
-              textStyle="body"
-              spaceY="8"
-            >
-              <Card.Root width="320px">
+        <h1>My Posts</h1>
+        <div>You need to be authenticated to view this page.</div>
+      </Layout>
+    );
+  }
+
+  if (status === "authenticated") {
+    const userImage = session.user?.image || "";
+
+    return (
+      <Layout>
+        <Container>
+          <Flex align="center" justify="center" direction="column" gap="4">
+            <Box p="4" color="fg.disabled">
+              <Card.Root maxW="full">
                 <Card.Body>
                   <HStack mb="6" gap="3">
                     <Avatar.Root>
                       <Avatar.Image src={userImage} />
                       <Avatar.Fallback name="Nate Foss" />
                     </Avatar.Root>
-                    <Stack gap="0">
-                      <Text fontWeight="semibold" textStyle="sm">
-                        {session?.user?.name}
+                    <Stack>
+                      <Text fontWeight="semibold" fontSize="sm">
+                        {session.user?.name}
                       </Text>
                     </Stack>
                   </HStack>
-                  <Card.Description>{session?.user?.email}</Card.Description>
+                  <Card.Description>{session.user?.email}</Card.Description>
                 </Card.Body>
-                <Card.Footer></Card.Footer>
               </Card.Root>
-              <MyPosts myPosts={[]} />
+
+              <GridCols>
+                <Subtitle text="My posts" />
+                <Main>
+                  {myPosts.map((post) => (
+                    <div key={post.id} className="post">
+                      <Post post={post} />
+                    </div>
+                  ))}
+                </Main>
+              </GridCols>
             </Box>
           </Flex>
         </Container>
@@ -64,4 +105,6 @@ export default function Component() {
   }
 
   return <Link href="/api/auth/signin">Sign in</Link>;
-}
+};
+
+export default MyPosts;
