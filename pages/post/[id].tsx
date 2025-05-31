@@ -90,6 +90,8 @@ const Post: React.FC<PostProps> = (props) => {
           textStyle="body"
           spaceY="4"
           minH="80vh"
+          maxW="full"
+          w="100%"
         >
           <Subtitle text={title} />
           <Text fontWeight="semibold" textStyle="md">
@@ -119,14 +121,23 @@ const Post: React.FC<PostProps> = (props) => {
           {userHasValidSession && postBelongsToUser && (
             <>
               <Group>
-                <Button variant="outline" onClick={() => publishPost(props.id)}>
+                <Button
+                  bg={{ base: "gray.950", _dark: "gray.50" }}
+                  color={{ base: "gray.50", _dark: "gray.950" }}
+                  onClick={() => publishPost(props.id)}
+                >
                   Publish
                 </Button>
-                <Button variant="outline" onClick={() => deletePost(props.id)}>
+                <Button
+                  bg={{ base: "gray.950", _dark: "gray.50" }}
+                  color={{ base: "gray.50", _dark: "gray.950" }}
+                  onClick={() => deletePost(props.id)}
+                >
                   Delete
                 </Button>
                 <Button
-                  variant="outline"
+                  bg={{ base: "gray.950", _dark: "gray.50" }}
+                  color={{ base: "gray.50", _dark: "gray.950" }}
                   onClick={() => Router.push(`/edit/${props.id}`)}
                 >
                   Edit

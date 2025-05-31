@@ -54,7 +54,7 @@ const Draft: React.FC = () => {
           minH="80vh"
         >
           <Subtitle text="Create a new post" />
-          <Fieldset.Root size="lg" maxW="md">
+          <Fieldset.Root colorPalette="gray" size="lg" maxW="md">
             <Stack>
               <Fieldset.Legend>New draft</Fieldset.Legend>
               <Fieldset.HelperText>

@@ -98,7 +98,7 @@ const Navbar = () => {
                     <Link href="/profile">Profile</Link>
                   </Menu.Item>
                   <Menu.Item value="new-file">
-                    <Link href="/new post">New post</Link>
+                    <Link href="/create">New post</Link>
                   </Menu.Item>
                   <Menu.Item value="new-win">
                     <Button
