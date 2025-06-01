@@ -9,7 +9,7 @@ import { GetServerSideProps } from "next";
 import Main from "../ui/stack";
 import Subtitle from "../ui/subtitle";
 import GridCols from "@/ui/grid";
-import { Container, Avatar, Card, HStack, Stack, Text } from "@chakra-ui/react";
+import { Avatar, Card, HStack, Stack, Text } from "@chakra-ui/react";
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await getSession({ req });
@@ -58,35 +58,33 @@ const MyPosts: React.FC<Props> = ({ myPosts }) => {
 
     return (
       <Layout>
-        <Container fluid>
-          <Card.Root shadow="xl" w="full" maxW="full">
-            <Card.Body>
-              <HStack mb="6" gap="3">
-                <Avatar.Root>
-                  <Avatar.Image src={userImage} />
-                  <Avatar.Fallback name="Nate Foss" />
-                </Avatar.Root>
-                <Stack>
-                  <Text fontWeight="semibold" fontSize="sm">
-                    {session.user?.name}
-                  </Text>
-                </Stack>
-              </HStack>
-              <Card.Description>{session.user?.email}</Card.Description>
-            </Card.Body>
-          </Card.Root>
+        <Card.Root my="4" shadow="xl" w="full" maxW="full">
+          <Card.Body>
+            <HStack mb="6" gap="3">
+              <Avatar.Root>
+                <Avatar.Image src={userImage} />
+                <Avatar.Fallback name="Nate Foss" />
+              </Avatar.Root>
+              <Stack>
+                <Text fontWeight="semibold" fontSize="sm">
+                  {session.user?.name}
+                </Text>
+              </Stack>
+            </HStack>
+            <Card.Description>{session.user?.email}</Card.Description>
+          </Card.Body>
+        </Card.Root>
 
-          <GridCols>
-            <Subtitle text="My posts" />
-            <Main>
-              {myPosts.map((post) => (
-                <div key={post.id} className="post">
-                  <Post post={post} />
-                </div>
-              ))}
-            </Main>
-          </GridCols>
-        </Container>
+        <GridCols>
+          <Subtitle text="My posts" />
+          <Main>
+            {myPosts.map((post) => (
+              <div key={post.id} className="post">
+                <Post post={post} />
+              </div>
+            ))}
+          </Main>
+        </GridCols>
       </Layout>
     );
   }

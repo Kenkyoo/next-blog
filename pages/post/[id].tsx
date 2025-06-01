@@ -84,6 +84,7 @@ const Post: React.FC<PostProps> = (props) => {
     <Layout>
       <Center px="8" py="6">
         <Box
+          shadow="xl"
           position="relative"
           p="4"
           borderWidth="1px"

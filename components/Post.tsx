@@ -30,7 +30,7 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
       animationDuration="1s"
       animationTimingFunction="ease-in-out"
       animationIterationCount="infinite"
-      shadow="inner"
+      shadow="xl"
       variant="subtle"
       size="md"
       w="full"

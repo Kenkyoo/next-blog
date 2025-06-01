@@ -38,17 +38,17 @@ const Navbar = () => {
       <div className="flex gap-8">
         {session ? (
           <Menu.Root size={"md"} variant="subtle">
-            <Menu.Trigger asChild>
-              <Tooltip
-                showArrow
-                content="Menu"
-                contentProps={{ css: { "--tooltip-bg": "teal" } }}
-              >
+            <Tooltip
+              showArrow
+              content="Menu"
+              contentProps={{ css: { "--tooltip-bg": "teal" } }}
+            >
+              <Menu.Trigger asChild>
                 <Icon size="lg" className="cursor-pointer">
                   <FiMenu />
                 </Icon>
-              </Tooltip>
-            </Menu.Trigger>
+              </Menu.Trigger>
+            </Tooltip>
             <Portal>
               <Menu.Positioner>
                 <Menu.Content py="8" px="10">
