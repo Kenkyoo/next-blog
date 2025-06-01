@@ -25,7 +25,16 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
       : post.content;
 
   return (
-    <Card.Root variant="subtle" size="md" w="full">
+    <Card.Root
+      animationName="shakeX"
+      animationDuration="1s"
+      animationTimingFunction="ease-in-out"
+      animationIterationCount="infinite"
+      shadow="inner"
+      variant="subtle"
+      size="md"
+      w="full"
+    >
       <Card.Body>
         <Card.Title mb="2">{post.title}</Card.Title>
         <Card.Description as="div">

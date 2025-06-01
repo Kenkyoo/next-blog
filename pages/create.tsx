@@ -102,6 +102,8 @@ const Draft: React.FC = () => {
                 disabled={!content || !title}
                 type="submit"
                 value="Create"
+                size="md"
+                my="4"
               />
               <a className="back" href="#" onClick={() => Router.push("/")}>
                 or Cancel
