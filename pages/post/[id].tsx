@@ -11,6 +11,7 @@ import Subtitle from "@/ui/subtitle";
 import { Text, HStack, Tag } from "@chakra-ui/react";
 import { Button, Group, Float, Badge } from "@chakra-ui/react";
 import { HiAtSymbol, HiStar } from "react-icons/hi";
+
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   if (!prisma) {
     throw new Error("Prisma client is not initialized");
@@ -121,7 +122,7 @@ const Post: React.FC<PostProps> = (props) => {
           )}
           {userHasValidSession && postBelongsToUser && (
             <>
-              <Float offset="4" placement="bottom-center">
+              <Float offset="8" placement="bottom-center">
                 <Group>
                   <Button
                     p="2"
@@ -152,7 +153,7 @@ const Post: React.FC<PostProps> = (props) => {
             </>
           )}
           {userHasValidSession && (
-            <Float offset="8" placement="top-end">
+            <Float offset="12" placement="top-end">
               <Button variant="ghost" onClick={handleFavorite}>
                 <Badge variant="solid" colorPalette="teal">
                   Save{isFavorited ? <HiAtSymbol /> : <HiStar />}

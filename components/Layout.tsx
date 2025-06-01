@@ -3,12 +3,14 @@ import Header from "./Header";
 import Wrapper from "../ui/container";
 import Footer from "./Footer";
 import { Separator } from "@chakra-ui/react";
+import { Container } from "@chakra-ui/react";
+
 type Props = {
   children: ReactNode;
 };
 
 const Layout: React.FC<Props> = (props) => (
-  <div>
+  <Container divideY="2px" divideColor="red.200">
     <Header />
     <Separator
       size="md"
@@ -24,7 +26,7 @@ const Layout: React.FC<Props> = (props) => (
       variant="solid"
     />
     <Footer />
-  </div>
+  </Container>
 );
 
 export default Layout;

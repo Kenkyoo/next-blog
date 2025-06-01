@@ -13,6 +13,7 @@ import { Pagination } from "@chakra-ui/react"; // Asegúrate de que esta importa
 import { Separator } from "@chakra-ui/react";
 import { Input, InputGroup, Kbd } from "@chakra-ui/react";
 import { LuSearch } from "react-icons/lu";
+import Loader from "../ui/loader";
 // Define el tipo de la respuesta de la API para mejor tipado
 interface ApiResponse {
   feed: PostProps[];
@@ -39,7 +40,7 @@ const Result = () => {
   }, 1000);
 
   if (error) return <div>Error fetching posts</div>;
-  if (!data) return <div>Loading...</div>;
+  if (!data) return <Loader />;
 
   const { feed, totalPosts, pageSize } = data;
 
