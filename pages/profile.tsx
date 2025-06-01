@@ -67,7 +67,7 @@ const MyPosts: React.FC<Props> = ({ myPosts }) => {
 
     return (
       <Layout>
-        <Container>
+        <Container fluid>
           <Flex align="center" justify="center" direction="column" gap="4">
             <Box p="4" color="fg.disabled">
               <Card.Root maxW="full">

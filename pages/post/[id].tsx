@@ -121,36 +121,38 @@ const Post: React.FC<PostProps> = (props) => {
           )}
           {userHasValidSession && postBelongsToUser && (
             <>
-              <Group>
-                <Button
-                  p="2"
-                  bg={{ base: "gray.950", _dark: "gray.50" }}
-                  color={{ base: "gray.50", _dark: "gray.950" }}
-                  onClick={() => publishPost(props.id)}
-                >
-                  Publish
-                </Button>
-                <Button
-                  p="2"
-                  bg={{ base: "gray.950", _dark: "gray.50" }}
-                  color={{ base: "gray.50", _dark: "gray.950" }}
-                  onClick={() => deletePost(props.id)}
-                >
-                  Delete
-                </Button>
-                <Button
-                  p="2"
-                  bg={{ base: "gray.950", _dark: "gray.50" }}
-                  color={{ base: "gray.50", _dark: "gray.950" }}
-                  onClick={() => Router.push(`/edit/${props.id}`)}
-                >
-                  Edit
-                </Button>
-              </Group>
+              <Float offset="4" placement="bottom-center">
+                <Group>
+                  <Button
+                    p="2"
+                    bg={{ base: "gray.950", _dark: "gray.50" }}
+                    color={{ base: "gray.50", _dark: "gray.950" }}
+                    onClick={() => publishPost(props.id)}
+                  >
+                    Publish
+                  </Button>
+                  <Button
+                    p="2"
+                    bg={{ base: "gray.950", _dark: "gray.50" }}
+                    color={{ base: "gray.50", _dark: "gray.950" }}
+                    onClick={() => deletePost(props.id)}
+                  >
+                    Delete
+                  </Button>
+                  <Button
+                    p="2"
+                    bg={{ base: "gray.950", _dark: "gray.50" }}
+                    color={{ base: "gray.50", _dark: "gray.950" }}
+                    onClick={() => Router.push(`/edit/${props.id}`)}
+                  >
+                    Edit
+                  </Button>
+                </Group>
+              </Float>
             </>
           )}
           {userHasValidSession && (
-            <Float offset="4" placement="top-end">
+            <Float offset="8" placement="top-end">
               <Button variant="ghost" onClick={handleFavorite}>
                 <Badge variant="solid" colorPalette="teal">
                   Save{isFavorited ? <HiAtSymbol /> : <HiStar />}

@@ -4,6 +4,15 @@ import Layout from "../components/Layout";
 import Post, { PostProps } from "../components/Post";
 import useSWR from "swr";
 import { useDebouncedCallback } from "use-debounce";
+import Main from "../ui/stack";
+import Subtitle from "../ui/subtitle";
+import GridCols from "@/ui/grid";
+import { ButtonGroup, IconButton } from "@chakra-ui/react";
+import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
+import { Pagination } from "@chakra-ui/react"; // Asegúrate de que esta importación sea correcta si el componente de paginación está en un paquete específico o si la importación anterior es de un componente personalizado. Si es un componente custom, el import es relativo
+import { Separator } from "@chakra-ui/react";
+import { Input, InputGroup, Kbd } from "@chakra-ui/react";
+import { LuSearch } from "react-icons/lu";
 // Define el tipo de la respuesta de la API para mejor tipado
 interface ApiResponse {
   feed: PostProps[];
@@ -33,39 +42,40 @@ const Result = () => {
   if (!data) return <div>Loading...</div>;
 
   const { feed, totalPosts, pageSize } = data;
-  const totalPages = Math.ceil(totalPosts / pageSize);
-
-  const handleNextPage = () => {
-    if (page < totalPages) {
-      setPage(page + 1);
-    }
-  };
-
-  const handlePreviousPage = () => {
-    if (page > 1) {
-      setPage(page - 1);
-    }
-  };
 
   return (
     <Layout>
-      <div className="page">
-        <h1>Public Feed</h1>
-        <p>Search</p>
-        <input
-          type="text"
-          value={searchValue}
-          onChange={(e) => {
-            const val = e.target.value;
-            setSearchValue(val);
-            debounced(val);
-          }}
-          placeholder="Search..."
-        />
-
-        <main>
+      <Separator
+        size="md"
+        orientation="horizontal"
+        colorPalette={{ base: "gray.50", _dark: "gray.950" }}
+        variant="solid"
+      />
+      <GridCols>
+        <Subtitle text="Search posts" />
+        <InputGroup
+          my="4"
+          mx="auto"
+          flex="1"
+          startElement={<LuSearch />}
+          endElement={<Kbd>⌘K</Kbd>}
+        >
+          <Input
+            size="lg"
+            w="full"
+            type="text"
+            placeholder="Search posts"
+            value={searchValue}
+            onChange={(e) => {
+              const val = e.target.value;
+              setSearchValue(val);
+              debounced(val);
+            }}
+          />
+        </InputGroup>
+        <Main>
           {feed.length === 0 ? (
-            <div>No posts found.</div>
+            <Subtitle text="No posts found" />
           ) : (
             feed.map((post: PostProps) => (
               <div key={post.id} className="post">
@@ -73,55 +83,38 @@ const Result = () => {
               </div>
             ))
           )}
-        </main>
-        <div className="pagination-controls">
-          <button onClick={handlePreviousPage} disabled={page === 1}>
-            Previous
-          </button>
-          <span>
-            Page {page} of {totalPages}
-          </span>
-          <button onClick={handleNextPage} disabled={page === totalPages}>
-            Next
-          </button>
-        </div>
-      </div>
-      <style jsx>{`
-        .post {
-          background: white;
-          transition: box-shadow 0.1s ease-in;
-        }
+        </Main>
 
-        .post:hover {
-          box-shadow: 1px 1px 3px #aaa;
-        }
+        {/* Integración del componente de paginación de Chakra UI */}
+        <Pagination.Root
+          count={totalPosts}
+          pageSize={pageSize}
+          page={page}
+          onPageChange={(nextPage) => setPage(nextPage.page)}
+        >
+          <ButtonGroup variant="outline" size="sm">
+            <Pagination.PrevTrigger asChild>
+              <IconButton>
+                <LuChevronLeft />
+              </IconButton>
+            </Pagination.PrevTrigger>
 
-        .post + .post {
-          margin-top: 2rem;
-        }
+            <Pagination.Items
+              render={(itemPage) => (
+                <IconButton variant={{ base: "ghost", _selected: "outline" }}>
+                  {itemPage.value}
+                </IconButton>
+              )}
+            />
 
-        .pagination-controls {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          margin-top: 2rem;
-          gap: 1rem; /* Espacio entre los elementos */
-        }
-
-        .pagination-controls button {
-          padding: 0.5rem 1rem;
-          border: 1px solid #ccc;
-          background-color: #f0f0f0;
-          cursor: pointer;
-          border-radius: 4px;
-        }
-
-        .pagination-controls button:disabled {
-          background-color: #e0e0e0;
-          color: #a0a0a0;
-          cursor: not-allowed;
-        }
-      `}</style>
+            <Pagination.NextTrigger asChild>
+              <IconButton>
+                <LuChevronRight />
+              </IconButton>
+            </Pagination.NextTrigger>
+          </ButtonGroup>
+        </Pagination.Root>
+      </GridCols>
     </Layout>
   );
 };
