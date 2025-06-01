@@ -25,7 +25,7 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
       : post.content;
 
   return (
-    <Card.Root variant="subtle" size="md">
+    <Card.Root variant="subtle" size="md" w="full">
       <Card.Body>
         <Card.Title mb="2">{post.title}</Card.Title>
         <Card.Description as="div">

@@ -75,8 +75,8 @@ const MyPosts: React.FC<Props> = ({ myPosts }) => {
             gap="4"
             w="full"
           >
-            <Box p="4" color="fg.disabled">
-              <Card.Root maxW="full">
+            <Box w="full" p="4" color="fg.disabled">
+              <Card.Root w="full" maxW="full">
                 <Card.Body>
                   <HStack mb="6" gap="3">
                     <Avatar.Root>

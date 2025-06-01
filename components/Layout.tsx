@@ -2,7 +2,6 @@ import React, { ReactNode } from "react";
 import Header from "./Header";
 import Wrapper from "../ui/container";
 import Footer from "./Footer";
-import { Separator } from "@chakra-ui/react";
 import { Container } from "@chakra-ui/react";
 
 type Props = {
@@ -10,21 +9,9 @@ type Props = {
 };
 
 const Layout: React.FC<Props> = (props) => (
-  <Container divideY="2px" divideColor="red.200">
+  <Container divideY="1px" divideColor={{ base: "gray.950", _dark: "gray.50" }}>
     <Header />
-    <Separator
-      size="md"
-      orientation="horizontal"
-      colorPalette={{ base: "gray.950", _dark: "gray.50" }}
-      variant="solid"
-    />
     <Wrapper>{props.children}</Wrapper>
-    <Separator
-      size="md"
-      orientation="horizontal"
-      colorPalette="gray"
-      variant="solid"
-    />
     <Footer />
   </Container>
 );

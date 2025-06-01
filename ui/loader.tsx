@@ -16,12 +16,8 @@ const Loader = () => {
         {" "}
         {/* Añadido spacing para separar el spinner y el texto */}
         <Spinner
-          size="xl" // Hazlo más grande para asegurarte de que se vea
-          // Usa un color que contraste bien con ambos modos (light/dark)
-          // Puedes usar un color de tu tema o uno por defecto de Chakra UI
-          color="blue.500" // Un color estándar de Chakra UI
-          // O si quieres que cambie con el modo:
-          // color={useColorModeValue("blue.500", "blue.200")}
+          size="xl"
+          colorPalette={{ base: "gray.950", _dark: "gray.50" }}
         />
         <Text
           fontSize="lg" // Ajusta el tamaño del texto si quieres
