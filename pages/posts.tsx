@@ -12,7 +12,7 @@ import { ButtonGroup, IconButton } from "@chakra-ui/react";
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
 import { Pagination } from "@chakra-ui/react"; // Asegúrate de que esta importación sea correcta si el componente de paginación está en un paquete específico o si la importación anterior es de un componente personalizado. Si es un componente custom, el import es relativo
 import Loader from "@/ui/loader";
-import { Separator } from "@chakra-ui/react";
+
 // Define el tipo de la respuesta de la API para mejor tipado
 interface ApiResponse {
   feed: PostProps[];
@@ -38,12 +38,6 @@ const Posts = () => {
 
   return (
     <Layout>
-      <Separator
-        size="md"
-        orientation="horizontal"
-        colorPalette={{ base: "gray.50", _dark: "gray.950" }}
-        variant="solid"
-      />
       <GridCols>
         <Title />
         <Main>
@@ -64,6 +58,7 @@ const Posts = () => {
           pageSize={pageSize}
           page={page}
           onPageChange={(nextPage) => setPage(nextPage.page)}
+          mb="6"
         >
           <ButtonGroup variant="outline" size="sm">
             <Pagination.PrevTrigger asChild>

@@ -7,6 +7,9 @@ import { NextAuthOptions, Session } from "next-auth";
 import { AdapterUser } from "next-auth/adapters";
 
 export const authOptions: NextAuthOptions = {
+  pages: {
+    signIn: "/login",
+  },
   adapter: PrismaAdapter(prisma!),
   providers: [
     GoogleProvider({

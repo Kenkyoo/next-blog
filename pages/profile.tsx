@@ -58,24 +58,25 @@ const MyPosts: React.FC<Props> = ({ myPosts }) => {
 
     return (
       <Layout>
-        <Card.Root my="4" shadow="xl">
-          <Card.Body>
-            <HStack mb="6" gap="3">
-              <Avatar.Root>
-                <Avatar.Image src={userImage} />
-                <Avatar.Fallback name="Nate Foss" />
-              </Avatar.Root>
-              <Stack>
-                <Text fontWeight="semibold" fontSize="sm">
-                  {session.user?.name}
-                </Text>
-              </Stack>
-            </HStack>
-            <Card.Description>{session.user?.email}</Card.Description>
-          </Card.Body>
-        </Card.Root>
-
         <GridCols>
+          <Subtitle text="My profile" />
+          <Card.Root my="4" shadow="xl">
+            <Card.Body>
+              <HStack mb="6" gap="3">
+                <Avatar.Root>
+                  <Avatar.Image src={userImage} />
+                  <Avatar.Fallback name="Nate Foss" />
+                </Avatar.Root>
+                <Stack>
+                  <Text fontWeight="semibold" fontSize="sm">
+                    {session.user?.name}
+                  </Text>
+                </Stack>
+              </HStack>
+              <Card.Description>{session.user?.email}</Card.Description>
+            </Card.Body>
+          </Card.Root>
+
           <Subtitle text="My posts" />
           <Main>
             {myPosts.map((post) => (
