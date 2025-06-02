@@ -58,7 +58,7 @@ const MyPosts: React.FC<Props> = ({ myPosts }) => {
 
     return (
       <Layout>
-        <Card.Root my="4" shadow="xl" w="full" maxW="full">
+        <Card.Root my="4" shadow="xl">
           <Card.Body>
             <HStack mb="6" gap="3">
               <Avatar.Root>
