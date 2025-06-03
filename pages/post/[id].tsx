@@ -67,7 +67,7 @@ const Post: React.FC<PostProps> = (props) => {
   const { data: session, status } = useSession();
   const [isFavorited, setIsFavorited] = React.useState(false);
   if (status === "loading") {
-    return <div>Authenticating ...</div>;
+    return <Loader />;
   }
   if (!Post) {
     return <Loader />;
