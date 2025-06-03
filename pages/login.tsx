@@ -26,7 +26,7 @@ export default function SignIn() {
   }, []);
 
   return (
-    <Center minH="100vh" py="12">
+    <Center minH="100vh" py="12" px="8">
       <Stack
         direction="column"
         gap="4"
@@ -36,7 +36,7 @@ export default function SignIn() {
         justify="center"
       >
         <Stack>
-          <Heading letterSpacing="tight">
+          <Heading px="4" size="3xl" letterSpacing="tight">
             <Highlight query="with speed" styles={{ color: "teal.600" }}>
               Create accessible account with speed
             </Highlight>
@@ -64,9 +64,7 @@ export default function SignIn() {
                     <Button
                       key={provider.name}
                       onClick={() => signIn(provider.id)}
-                      bg={
-                        isGoogle ? "gray.600" : isGithub ? "gray.900" : "blue"
-                      }
+                      bg={isGoogle ? "red.600" : isGithub ? "teal.600" : "blue"}
                       variant="solid"
                       w="full"
                       {...(isGoogle ? (

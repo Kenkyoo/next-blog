@@ -11,6 +11,7 @@ import Subtitle from "@/ui/subtitle";
 import { Text, HStack, Tag } from "@chakra-ui/react";
 import { Button, Group, Float, Badge } from "@chakra-ui/react";
 import { HiAtSymbol, HiStar } from "react-icons/hi";
+import Loader from "@/ui/loader";
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   if (!prisma) {
@@ -68,6 +69,10 @@ const Post: React.FC<PostProps> = (props) => {
   if (status === "loading") {
     return <div>Authenticating ...</div>;
   }
+  if (!Post) {
+    return <Loader />;
+  }
+
   const userHasValidSession = Boolean(session);
   const postBelongsToUser = session?.user?.email === props.author?.email;
   let title = props.title;

@@ -3,6 +3,17 @@ import React, { useState } from "react";
 import Router from "next/router";
 import Layout from "../../components/Layout";
 import prisma from "../../lib/prisma";
+import {
+  Field,
+  Fieldset,
+  Input,
+  Textarea,
+  Stack,
+  Box,
+  Center,
+  Button,
+} from "@chakra-ui/react";
+import Subtitle from "@/ui/subtitle";
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const post = await prisma!.post.findUnique({
@@ -43,25 +54,62 @@ const EditPost: React.FC<{ id: string; title: string; content: string }> = ({
 
   return (
     <Layout>
-      <form onSubmit={updateData}>
-        <h1>Edit Post</h1>
-        <input
-          autoFocus
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="Title"
-          type="text"
-          value={title}
-        />
-        <textarea
-          cols={50}
-          onChange={(e) => setContent(e.target.value)}
-          placeholder="Content"
-          rows={8}
-          value={content}
-        />
-        <input disabled={!title || !content} type="submit" value="Update" />
-        <button onClick={() => Router.push(`/post/${id}`)}>Cancel</button>
-      </form>
+      <Center px="8" py="6">
+        <Box
+          p="4"
+          borderWidth="1px"
+          borderColor="border.disabled"
+          color="fg.disabled"
+          textStyle="body"
+          spaceY="4"
+          minH="80vh"
+          bg="bg.subtle"
+        >
+          <Subtitle text="Edit post" />
+          <Fieldset.Root colorPalette="gray" size="lg" maxW="md">
+            <Stack>
+              <Fieldset.Legend>New draft</Fieldset.Legend>
+              <Fieldset.HelperText>
+                Please provide your post details below.
+              </Fieldset.HelperText>
+            </Stack>
+            <form onSubmit={updateData}>
+              <Fieldset.Content>
+                <Field.Root>
+                  <Field.Label>Title</Field.Label>
+                  <Input
+                    variant="outline"
+                    autoFocus
+                    onChange={(e) => setTitle(e.target.value)}
+                    placeholder="Title"
+                    type="text"
+                    value={title}
+                    name="title"
+                  />
+                </Field.Root>
+                <Textarea
+                  variant="outline"
+                  cols={50}
+                  onChange={(e) => setContent(e.target.value)}
+                  placeholder="Content"
+                  rows={8}
+                  value={content}
+                />
+              </Fieldset.Content>
+              <Input
+                disabled={!title || !content}
+                type="submit"
+                value="Update"
+                bg={{ base: "gray.950", _dark: "gray.50" }}
+                color={{ base: "gray.50", _dark: "gray.950" }}
+                size="md"
+                my="4"
+              />
+              <Button onClick={() => Router.push(`/post/${id}`)}>Cancel</Button>
+            </form>
+          </Fieldset.Root>
+        </Box>
+      </Center>
     </Layout>
   );
 };

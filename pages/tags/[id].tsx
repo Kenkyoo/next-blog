@@ -2,7 +2,9 @@ import React from "react";
 import Layout from "@/components/Layout";
 import Post, { PostProps } from "@/components/Post";
 import prisma from "@/lib/prisma";
-
+import Main from "@/ui/stack";
+import Subtitle from "@/ui/subtitle";
+import GridCols from "@/ui/grid";
 import { GetServerSideProps } from "next";
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
@@ -40,30 +42,20 @@ type Props = {
 const Tag: React.FC<Props> = ({ tag }) => {
   return (
     <Layout>
-      <div className="page">
-        <h1>Posts con el tag: #{tag.name}</h1>
-        <main>
-          {tag.posts.map((post) => (
-            <div key={post.id} className="post">
-              <Post post={post} />
-            </div>
-          ))}
-        </main>
-      </div>
-      <style jsx>{`
-        .post {
-          background: white;
-          transition: box-shadow 0.1s ease-in;
-        }
-
-        .post:hover {
-          box-shadow: 1px 1px 3px #aaa;
-        }
-
-        .post + .post {
-          margin-top: 2rem;
-        }
-      `}</style>
+      <Subtitle text="#{tag.name}" />
+      <GridCols>
+        <Main>
+          {tag.posts.length === 0 ? (
+            <Subtitle text="No posts found" />
+          ) : (
+            tag.posts.map((post: PostProps) => (
+              <div key={post.id} className="post">
+                <Post post={post} />
+              </div>
+            ))
+          )}
+        </Main>
+      </GridCols>
     </Layout>
   );
 };
