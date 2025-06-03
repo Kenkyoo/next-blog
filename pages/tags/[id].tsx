@@ -42,7 +42,7 @@ type Props = {
 const Tag: React.FC<Props> = ({ tag }) => {
   return (
     <Layout>
-      <Subtitle text="#{tag.name}" />
+      <Subtitle text={`Posts tagged with "${tag.name}`} />
       <GridCols>
         <Main>
           {tag.posts.length === 0 ? (
