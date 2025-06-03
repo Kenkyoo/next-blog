@@ -33,7 +33,9 @@ const Bar = () => {
         gap="4"
         direction="row"
       >
-        <Text>Sphinx of black quartz, judge my vow.</Text>
+        <Text fontSize="2xl" sm={{ fontSize: "3xl" }}>
+          Sphinx of black quartz, judge my vow.
+        </Text>
         <HeartIcon size="lg" color="blue.400" />
         <Button px="2" variant="outline" rounded="l2">
           Hi!

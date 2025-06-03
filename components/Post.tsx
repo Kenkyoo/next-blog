@@ -54,8 +54,9 @@ const Post: React.FC<{ post: PostProps }> = ({ post }) => {
               <Tag.Root
                 colorPalette="teal"
                 size="md"
-                variant="subtle"
+                variant="solid"
                 key={index}
+                p="2"
               >
                 <Tag.Label onClick={() => Router.push(`/tags/${tag.name}`)}>
                   {tag.name}
